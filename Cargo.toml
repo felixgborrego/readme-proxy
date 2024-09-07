@@ -1,0 +1,37 @@
+[package]
+name = "readme-proxy"
+version = "0.1.0"
+edition = "2021"
+description = "A proxy service for handling readme requests."
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/felixgborrego/readme-proxy"
+readme = "README.md"
+keywords = ["proxy", "axum", "rust"]
+
+[dependencies]
+axum = "0.7.5"
+tokio = { version = "1.40.0", features = ["macros", "rt-multi-thread"] }
+reqwest = { version = "0.12.7", features = [
+    "cookies",
+    "brotli",
+    "gzip",
+    "rustls-tls",
+] }
+hyper = "1.4.1"
+futures = "0.3.30"
+brotli = "6.0.0"
+flate2 = "1.0.24"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+dotenvy = "0.15.7"
+derive_more = { version = "1.0.0", features = ["from", "display"] }
+
+
+# Release optized for size
+[profile.release]
+strip = true
+opt-level = "z"
+lto = true
+codegen-units = 1 # Single codegen unit for better optimization
+panic = "abort"   # Reduces binary size
+incremental = false # Disables incremental compilation for release builds
